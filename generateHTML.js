@@ -24,7 +24,7 @@ function generateHTML(responses) {
                 <div class="card-header bg-primary text-white font-weight-bold">${responses.name} <br>Icon and Job Title</div>
                 <div class="card-body">
                     <p class="card-text border">${responses.id}</p>
-                    <p class="card-text border">${responses.email}</p>
+                    <p class="card-text border"><a href = "mailto: ${responses.email}">${responses.email}</a></p>
                     <p class="card-text border">Office Number, GitHub, or School</p>
                 </div>
             </div>
