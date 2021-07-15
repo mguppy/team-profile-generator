@@ -1,62 +1,100 @@
-class Employee {
-    constructor(name, id, email) {
-        this.name = name;
-        this.id = id;
-        this.email = email;
-    }
+//Including packages for this application
+const fs = require('fs');
+const inquirer = require('inquirer');
+const generateHTML = require('./generateHTML');
 
-    getName() {
-        return this.name;
+//Questions array for manager
+const managerQuestions = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'What is your name?',
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: 'What is your employee ID?',
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'What is your email address?',
     }
+]
 
-    getID() {
-        return this.id;
-    }
 
-    getEmail () {
-        return this.email;
-    }
+// class Employee {
+//     constructor(name, id, email) {
+//         this.name = name;
+//         this.id = id;
+//         this.email = email;
+//     }
 
-    getRole () {
-        return 'Employee';
-    }
-}
+//     getName() {
+//         return this.name;
+//     }
 
-class Manager {
-    constructor(officeNumber) {
-        this.officeNumber = officeNumber;
-    }
+//     getID() {
+//         return this.id;
+//     }
 
-    getRole() {
-        return 'Manager';
-    }
-}
+//     getEmail () {
+//         return this.email;
+//     }
 
-class Engineer {
-    constructor(github){
-        this.github = github;
-    }
+//     getRole () {
+//         return 'Employee';
+//     }
+// }
 
-    getGithub() {
-        return this.github;
-    }
+// class Manager extends Employee {
+//     constructor(officeNumber) {
+//         super(name, id, email)
+//         this.officeNumber = officeNumber;
+//     }
 
-    getRole() {
-        return 'Engineer';
-    }
-}
+//     getRole() {
+//         return 'Manager';
+//     }
+// }
 
-class Intern {
-    constructor(school) {
-        this.school = school;
-    }
+// class Engineer extends Employee{
+//     constructor(github){
+//         super(name, id, email)
+//         this.github = github;
+//     }
 
-    getSchool () {
-        return this.school;
-    }
+//     getGithub() {
+//         return this.github;
+//     }
 
-    getRole () {
-        return 'Intern';
-    }
-}
+//     getRole() {
+//         return 'Engineer';
+//     }
+// }
 
+// class Intern {
+//     constructor(school) {
+//         super(name, id, email)
+//         this.school = school;
+//     }
+
+//     getSchool () {
+//         return this.school;
+//     }
+
+//     getRole () {
+//         return 'Intern';
+//     }
+// }
+
+inquirer
+    .prompt(managerQuestions)
+    .then((responses) => {
+        const filename = "./my-team.html";
+
+        //Passing the responses from the user into the README file using the generateMarkdown function
+        fs.writeFile(filename, generateHTML({...responses}), (err) =>
+            err ? console.log(err) : console.log('Success!')
+        );
+    });
