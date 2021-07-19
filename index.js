@@ -2,44 +2,12 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const generateManagerHTML = require("./generateHTML");
+const generateEngineerHTML = require("./generateHTML");
+const generateInternHTML = require("./generateHTML");
+const generateHTML = require("./generateHTML");
 
 var employees = [];
 var cards = [];
-//Questions array for manager
-// const managerQuestions = [
-//     {
-//         type: 'input',
-//         name: 'name',
-//         message: 'What is your name?',
-//     },
-//     {
-//         type: 'input',
-//         name: 'id',
-//         message: 'What is your employee ID?',
-//     },
-//     {
-//         type: 'input',
-//         name: 'email',
-//         message: 'What is your email address?',
-//     },
-//     {
-//         type: 'input',
-//         name: 'phonenumber',
-//         message: 'What is your office phone number?',
-//     },
-//     {
-//         type: 'list',
-//         message: 'Would you like to add an Engineer or an Intern to your team?',
-//         name: 'employeetype',
-//         choices: ['Engineer', 'Intern', 'None'],
-//     },
-// //Only question for engineer
-// {
-//     type: 'input',
-//     name: 'github',
-//     message: 'What is your GitHub username?',
-// },
-// ]
 
 const employeeQuestions = [
     {
@@ -59,6 +27,7 @@ const employeeQuestions = [
     },
 ];
 
+//Questions array for manager
 const managerQuestions = [
     {
         type: "input",
@@ -109,11 +78,11 @@ class Employee {
         return this.id;
     }
 
-    getEmail () {
+    getEmail() {
         return this.email;
     }
 
-    getRole () {
+    getRole() {
         return 'Employee';
     }
 }
@@ -124,13 +93,17 @@ class Manager extends Employee {
         this.officeNumber = officeNumber;
     }
 
+    getNumber() {
+        return this.officeNumber;
+    }
+
     getRole() {
         return 'Manager';
     }
 }
 
-class Engineer extends Employee{
-    constructor(github){
+class Engineer extends Employee {
+    constructor(github, name, id, email) {
         super(name, id, email)
         this.github = github;
     }
@@ -145,61 +118,85 @@ class Engineer extends Employee{
 }
 
 class Intern extends Employee {
-    constructor(school) {
+    constructor(school, name, id, email) {
         super(name, id, email)
         this.school = school;
     }
 
-    getSchool () {
+    getSchool() {
         return this.school;
     }
 
-    getRole () {
+    getRole() {
         return 'Intern';
     }
 }
 
 
 // Function to initialize app
-function init() { 
-    const filename = "./my-team.html";
+function init() {
+    //Gets responses for manager and pushes answers from manager object into employees array
     inquirer.prompt(employeeQuestions).then((managerEmployeeresponses) => {
         inquirer.prompt(managerQuestions).then((managerResponses) => {
             var manager = new Manager(managerResponses.phonenumber, managerEmployeeresponses.name, managerEmployeeresponses.id, managerEmployeeresponses.email);
             employees.push(manager);
-            console.log(employees)
             addEmployee();
-
-            //Passing the responses from the user into the README file using the generateMarkdown function
-            //fs.writeFile(filename, generateManagerHTML({ ...responses }), (err) =>
-            //    err ? console.log(err) : console.log("Success!")
-            //);
         });
-        
+
     });
 
 }
 
 function addEmployee() {
+    // Ask manager if there is another employee on the team.  If "None" is selected, no more questions appear and the cards are generated for employees in the employees array
     inquirer.prompt(nextEmployee).then((nextEmployeeResponses) => {
-        if(nextEmployeeResponses.employeetype == 'None'){
+        if (nextEmployeeResponses.employeetype == 'None') {
+
+            //Loop to go through employees array and push a card for each employee to the cards array
+            for (let index = 0; index < employees.length; index++) {
+                var thisemployee = employees[index];
+                if (thisemployee.getRole() == 'Engineer') {
+                    cards.push(generateEngineerHTML(thisemployee));
+                }
+                if (thisemployee.getRole() == 'Manager') {
+                    cards.push(generateManagerHTML(thisemployee));
+                }
+                if (thisemployee.getRole() == 'Intern') {
+                    cards.push(generateInternHTML(thisemployee));
+                }
+            }
+
+            // Passing the responses from the user into the HTML file based on employees that manager entered
+            const filename = "./my-team.html";
+            console.log(generateHTML(cards));
+            fs.writeFile(filename, generateHTML(cards), (err) =>
+                err ? console.log(err) : console.log("Success!")
+            );
         }
-        else if(nextEmployeeResponses.employeetype == 'Engineer') {
+        // Asks the manager to answer the engineer questions and based on those answers, a new engineer is put into the employees array
+        else if (nextEmployeeResponses.employeetype == 'Engineer') {
             inquirer.prompt(employeeQuestions).then((engineerEmployeeResponses) => {
                 inquirer.prompt(engineerQuestions).then((engineerResponses) => {
+                    var engineer = new Engineer(engineerResponses.github, engineerEmployeeResponses.name, engineerEmployeeResponses.id, engineerEmployeeResponses.email);
+                    employees.push(engineer);
+                    console.log(employees);
                     addEmployee();
                 });
             });
-            
+        // Asks the manager to answer the intern questions and based on those answers, a new intern is put into the employees array
         } else if (nextEmployeeResponses.employeetype == 'Intern') {
             inquirer.prompt(employeeQuestions).then((internEmployeeResponses) => {
                 inquirer.prompt(internQuestions).then((internResponses) => {
+                    var intern = new Intern(internResponses.school, internEmployeeResponses.name, internEmployeeResponses.id, internEmployeeResponses.email);
+                    employees.push(intern);
+                    console.log(employees);
                     addEmployee();
                 });
             });
         }
     });
 }
+
 
 // Function call to initialize app
 init();
