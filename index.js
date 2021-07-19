@@ -1,14 +1,15 @@
 //Including packages for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
-const generateManagerHTML = require("./generateHTML");
-const generateEngineerHTML = require("./generateHTML");
-const generateInternHTML = require("./generateHTML");
-const generateHTML = require("./generateHTML");
+const team = require("./generateHTML");
+// const generateEngineerHTML = require("./generateHTML");
+// const generateInternHTML = require("./generateHTML");
+// const generateHTML = require("./generateHTML");
 
 var employees = [];
 var cards = [];
 
+//Questions array for all employees
 const employeeQuestions = [
     {
         type: "input",
@@ -156,20 +157,20 @@ function addEmployee() {
             for (let index = 0; index < employees.length; index++) {
                 var thisemployee = employees[index];
                 if (thisemployee.getRole() == 'Engineer') {
-                    cards.push(generateEngineerHTML(thisemployee));
+                    cards.push(team.generateEngineerHTML(thisemployee));
                 }
                 if (thisemployee.getRole() == 'Manager') {
-                    cards.push(generateManagerHTML(thisemployee));
+                    cards.push(team.generateManagerHTML(thisemployee));
                 }
                 if (thisemployee.getRole() == 'Intern') {
-                    cards.push(generateInternHTML(thisemployee));
+                    cards.push(team.generateInternHTML(thisemployee));
                 }
             }
 
             // Passing the responses from the user into the HTML file based on employees that manager entered
             const filename = "./my-team.html";
-            console.log(generateHTML(cards));
-            fs.writeFile(filename, generateHTML(cards), (err) =>
+            console.log(team.generateHTML(cards));
+            fs.writeFile(filename, team.generateHTML(cards), (err) =>
                 err ? console.log(err) : console.log("Success!")
             );
         }
@@ -179,7 +180,6 @@ function addEmployee() {
                 inquirer.prompt(engineerQuestions).then((engineerResponses) => {
                     var engineer = new Engineer(engineerResponses.github, engineerEmployeeResponses.name, engineerEmployeeResponses.id, engineerEmployeeResponses.email);
                     employees.push(engineer);
-                    console.log(employees);
                     addEmployee();
                 });
             });
@@ -189,7 +189,6 @@ function addEmployee() {
                 inquirer.prompt(internQuestions).then((internResponses) => {
                     var intern = new Intern(internResponses.school, internEmployeeResponses.name, internEmployeeResponses.id, internEmployeeResponses.email);
                     employees.push(intern);
-                    console.log(employees);
                     addEmployee();
                 });
             });

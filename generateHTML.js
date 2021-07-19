@@ -8,8 +8,9 @@
 //     return " ";
 // }
 
+module.exports = team = {
 //Function to generate HTML layout
-function generateHTML(cards) {
+generateHTML: function(cards) {
     return `<!DOCTYPE html>
     <html lang="en">
     
@@ -35,9 +36,9 @@ function generateHTML(cards) {
         </div>
     </body>
     </html>`
-}
+},
 //Function to generate new card HTML for manager
-function generateManagerHTML(managerresponses) {
+generateManagerHTML: function(managerresponses) {
     return `<div class="card bg-light mb-3" style="max-width: 18rem;">
                 <div class="card-header bg-primary text-white font-weight-bold">${managerresponses.name} <br><i class="fas fa-coffee"></i> Manager</div>
                 <div class="card-body">
@@ -46,9 +47,9 @@ function generateManagerHTML(managerresponses) {
                     <p class="card-text border">Phone Number: ${managerresponses.officeNumber}</p>
                 </div>
             </div>`
-}
+},
 
-function generateEngineerHTML(engineerresponses) {
+generateEngineerHTML: function(engineerresponses) {
     return `<div class="card bg-light mb-3" style="max-width: 18rem;">
                 <div class="card-header bg-primary text-white font-weight-bold">${engineerresponses.name} <br><i class="fas fa-glasses"></i>Engineer</div>
                 <div class="card-body">
@@ -57,20 +58,20 @@ function generateEngineerHTML(engineerresponses) {
                     <p class="card-text border">GitHub: ${engineerresponses.github}</p>
                 </div>
             </div>`
-}
+},
 
-function generateInternHTML(responses) {
+generateInternHTML: function (internresponses) {
     return `<div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header bg-primary text-white font-weight-bold">${responses.name} <br><i class="fas fa-user-graduate"></i>Intern</div>
+                <div class="card-header bg-primary text-white font-weight-bold">${internresponses.name} <br><i class="fas fa-user-graduate"></i>Intern</div>
                 <div class="card-body">
-                    <p class="card-text border">Employee ID: ${responses.id}</p>
-                    <p class="card-text border">Email: <a href = "mailto: ${responses.email}">${responses.email}</a></p>
-                    <p class="card-text border">School: ${responses.school}</p>
+                    <p class="card-text border">Employee ID: ${internresponses.id}</p>
+                    <p class="card-text border">Email: <a href = "mailto: ${internresponses.email}">${internresponses.email}</a></p>
+                    <p class="card-text border">School: ${internresponses.school}</p>
                 </div>
             </div>`
 }
-
-exports.generateManagerHTML = generateManagerHTML;
-exports.generateEngineerHTML = generateEngineerHTML;
-exports.generateHTML = generateHTML;
-exports.generateInternHTML = generateInternHTML;
+}
+// exports.generateManagerHTML = generateManagerHTML;
+// exports.generateEngineerHTML = generateEngineerHTML;
+// exports.generateHTML = generateHTML;
+// exports.generateInternHTML = generateInternHTML;
