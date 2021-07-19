@@ -1,12 +1,6 @@
 //If manager selects engineer, add another card displaying engineer's info
 //If manager selects intern, add another card displaying intern's info
 //If manager selects none, do nothing
-// function generateNewCardHTML(employeetype) {
-//     if (employeetype !== 'Engineer') {
-//         generateEngineerHTML();
-//     }
-//     return " ";
-// }
 
 module.exports = team = {
 //Function to generate HTML layout
@@ -51,7 +45,7 @@ generateManagerHTML: function(managerresponses) {
 
 generateEngineerHTML: function(engineerresponses) {
     return `<div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header bg-primary text-white font-weight-bold">${engineerresponses.name} <br><i class="fas fa-glasses"></i>Engineer</div>
+                <div class="card-header bg-primary text-white font-weight-bold">${engineerresponses.name} <br><i class="fas fa-glasses"></i> Engineer</div>
                 <div class="card-body">
                     <p class="card-text border">Employee ID: ${engineerresponses.id}</p>
                     <p class="card-text border">Email: <a href = "mailto: ${engineerresponses.email}">${engineerresponses.email}</a></p>
@@ -62,7 +56,7 @@ generateEngineerHTML: function(engineerresponses) {
 
 generateInternHTML: function (internresponses) {
     return `<div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header bg-primary text-white font-weight-bold">${internresponses.name} <br><i class="fas fa-user-graduate"></i>Intern</div>
+                <div class="card-header bg-primary text-white font-weight-bold">${internresponses.name} <br><i class="fas fa-user-graduate"></i> Intern</div>
                 <div class="card-body">
                     <p class="card-text border">Employee ID: ${internresponses.id}</p>
                     <p class="card-text border">Email: <a href = "mailto: ${internresponses.email}">${internresponses.email}</a></p>
@@ -71,7 +65,3 @@ generateInternHTML: function (internresponses) {
             </div>`
 }
 }
-// exports.generateManagerHTML = generateManagerHTML;
-// exports.generateEngineerHTML = generateEngineerHTML;
-// exports.generateHTML = generateHTML;
-// exports.generateInternHTML = generateInternHTML;

@@ -2,9 +2,10 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const team = require("./generateHTML");
-// const generateEngineerHTML = require("./generateHTML");
-// const generateInternHTML = require("./generateHTML");
-// const generateHTML = require("./generateHTML");
+const Employee = require("./lib/Employee");
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
 
 var employees = [];
 var cards = [];
@@ -14,17 +15,17 @@ const employeeQuestions = [
     {
         type: "input",
         name: "name",
-        message: "What is your name?",
+        message: "What is the name of the employee?",
     },
     {
         type: "input",
         name: "id",
-        message: "What is your employee ID?",
+        message: "What is their employee ID?",
     },
     {
         type: "input",
         name: "email",
-        message: "What is your email address?",
+        message: "What is their email address?",
     },
 ];
 
@@ -33,7 +34,7 @@ const managerQuestions = [
     {
         type: "input",
         name: "phonenumber",
-        message: "What is your office phone number?",
+        message: "What is the manager's office phone number?",
     },
 ];
 
@@ -42,7 +43,7 @@ const engineerQuestions = [
     {
         type: "input",
         name: "github",
-        message: "What is your GitHub username?",
+        message: "What is the engineer's GitHub username?",
     },
 ];
 
@@ -51,7 +52,7 @@ const internQuestions = [
     {
         type: "input",
         name: "school",
-        message: "What school did you go to?",
+        message: "What school did the intern go to?",
     },
 ];
 
@@ -63,76 +64,6 @@ const nextEmployee = [{
     choices: ["Engineer", "Intern", "None"],
 },
 ];
-
-class Employee {
-    constructor(name, id, email) {
-        this.name = name;
-        this.id = id;
-        this.email = email;
-    }
-
-    getName() {
-        return this.name;
-    }
-
-    getID() {
-        return this.id;
-    }
-
-    getEmail() {
-        return this.email;
-    }
-
-    getRole() {
-        return 'Employee';
-    }
-}
-
-class Manager extends Employee {
-    constructor(officeNumber, name, id, email) {
-        super(name, id, email)
-        this.officeNumber = officeNumber;
-    }
-
-    getNumber() {
-        return this.officeNumber;
-    }
-
-    getRole() {
-        return 'Manager';
-    }
-}
-
-class Engineer extends Employee {
-    constructor(github, name, id, email) {
-        super(name, id, email)
-        this.github = github;
-    }
-
-    getGithub() {
-        return this.github;
-    }
-
-    getRole() {
-        return 'Engineer';
-    }
-}
-
-class Intern extends Employee {
-    constructor(school, name, id, email) {
-        super(name, id, email)
-        this.school = school;
-    }
-
-    getSchool() {
-        return this.school;
-    }
-
-    getRole() {
-        return 'Intern';
-    }
-}
-
 
 // Function to initialize app
 function init() {
