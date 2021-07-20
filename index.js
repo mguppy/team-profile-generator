@@ -1,7 +1,7 @@
 //Including packages for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
-const team = require("./generateHTML");
+const team = require("./src/generateHTML");
 const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
@@ -99,7 +99,7 @@ function addEmployee() {
             }
 
             // Passing the responses from the user into the HTML file based on employees that manager entered
-            const filename = "./my-team.html";
+            const filename = "./dist/my-team.html";
             console.log(team.generateHTML(cards));
             fs.writeFile(filename, team.generateHTML(cards), (err) =>
                 err ? console.log(err) : console.log("Success!")
