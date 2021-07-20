@@ -19,15 +19,18 @@ THEN I am prompted to enter the intern’s name, ID, email, and school, and I am
 WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 
-#Description
+# Description
 I build a team profile generator so that a manager is able to answer questions in the terminal and then a webpage is generated that includes his/her full team.  The manager is able to add themselves, engineers, or interns.
 
-#Video
+# Demo of Team Profile Generator
 ![Alt Text](Demo.gif)
+
+# Video of Test Cases
+![Alt Text](Testing.gif)
 
 Deployed website - https://mguppy.github.io/team-profile-generator/
 
-#Questions
+# Questions
 If you have any questions about the repo, open an issue or contact me directly at mguppy34@gmail.com. You can find more of my work at github.com/mguppy.
 
 Credits: w3schools.com, my tutor, classmates and my programmer husband
